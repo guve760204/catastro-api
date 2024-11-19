@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TransactionController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,6 +26,9 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //Transaction Routes
     Route::resource('transactions', TransactionController::class);
+
+    //Users routes
+   Route::resource('users', UserController::class);
 
     //...
 });
