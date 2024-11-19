@@ -48,4 +48,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function refresh_tokens(){
+        return $this->hasMany(RefreshToken::class);
+    }
 }
