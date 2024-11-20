@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Resources\UserCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Message;
+
+
 
 class UserController extends Controller
 {
@@ -14,9 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::query();
-
         $users = $users->get();
-
         return new UserCollection($users);
     }
 
@@ -25,7 +28,45 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required  ',
+            'phone' => 'required',
+            'address' => 'required',
+            'cargo' => 'required',
+            'role_id' => 'required'
+        ]);
+
+        if(User::where('email', $request->get('email'))->count()){
+            abort(400, 'Ya existe un usuario con este email.');
+        }
+
+        if($request->role_id == 1){
+            $request->role_id = 2;
+        }
+
+        $user =User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => Hash::make($request->get('email')),
+            'phone' => $request->get('phone'),
+            'address' => $request->get('address'),
+            'cargo' => $request->get('cargo'),
+            'role_id' => $request->role_id
+        ]);
+
+        $user->is_active = true;
+        $user->save();
+
+
+
+        Mail::raw('Bienvenido a la plataforma Catastro', function (Message $message) use ($user) {
+            $message->to($user->email)->from('catastro@catastro.com', 'Catastro');
+        });
+
+        return response()->json(['ok'=>true, 'message'=>'User created successfully'], 200);
+
+
     }
 
     /**
@@ -39,16 +80,40 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required  ',
+            'phone' => 'required',
+            'address' => 'required',
+            'cargo' => 'required',
+            'role_id' => 'required'
+        ]);
+
+       if($request->role_id == 1){
+            $request->role_id = 2;
+       }
+
+        $user->name = $request->get('name');
+        $user->email = $request->get('email');
+        $user->phone = $request->get('phone');
+        $user->address = $request->get('address');
+        $user->cargo = $request->get('cargo');
+        $user->role_id = $request->get('role_id');
+
+        $user->save();
+
+        return response()->json(['ok'=>true, 'message'=>'Usuaro actualizado con exito'], 200);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response()->json(['ok'=>true, 'message'=>'Usuaro eliminado con exito'], 200);
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('email', 255)->unique();
             $table->string('phone', 25)->nullable();
             $table->string('address', 255)->nullable();
-            $table->boolean('is_active')->default(false);
+            $table->boolean('is_active')->default(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedInteger('role_id')->default(7);
             $table->string('password');

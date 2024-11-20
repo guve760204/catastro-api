@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('email')->nullable();
             $table->string('phone',25)->nullable();
             $table->string('address', 255)->nullable();
+            $table->string('lat', 25)->nullable();
+            $table->string('lng', 25)->nullable();
             $table->timestamps();
         });
     }
