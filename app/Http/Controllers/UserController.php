@@ -37,6 +37,7 @@ class UserController extends Controller
             'role_id' => 'required'
         ]);
 
+
         if(User::where('email', $request->get('email'))->count()){
             abort(400, 'Ya existe un usuario con este email.');
         }
@@ -60,8 +61,8 @@ class UserController extends Controller
 
 
 
-        Mail::raw('Bienvenido a la plataforma Catastro', function (Message $message) use ($user) {
-            $message->to($user->email)->from('catastro@catastro.com', 'Catastro');
+        Mail::raw('Bienvenido a la plataforma Catastro App, puedes hacer login por primera vez usando el email como contraseña', function (Message $message) use ($user) {
+            $message->to($user->email)->from('catastro@catastro.com', 'Catastro')->subject('Bienvenido a Catastro App');
         });
 
         return response()->json(['ok'=>true, 'message'=>'User created successfully'], 200);

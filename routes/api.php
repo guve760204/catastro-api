@@ -23,6 +23,7 @@ Route::middleware('auth:sanctum')->group(function(){
     //auth routes
     Route::post('verify_token', [AuthController::class, 'verifyToken']);
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::get('get_logged_in_user', [AuthController::class, 'getLoggedInUser']);
 
     //Transaction Routes
     Route::resource('transactions', TransactionController::class);

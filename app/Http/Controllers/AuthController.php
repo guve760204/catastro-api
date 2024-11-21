@@ -101,4 +101,9 @@ class AuthController extends Controller
         $user->refresh_tokens()->delete();
         return response()->json(['message' => 'Logged out successfully'], 200);
     }
+
+    public function getLoggedInUser(){
+        $user = auth()->user();
+        return new UserResource($user);
+    }
 }
