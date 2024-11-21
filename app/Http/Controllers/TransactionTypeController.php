@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TransactionTypeCollection;
 use App\Models\TransactionType;
 use App\Http\Requests\StoreTransactionTypeRequest;
 use App\Http\Requests\UpdateTransactionTypeRequest;
@@ -13,7 +14,8 @@ class TransactionTypeController extends Controller
      */
     public function index()
     {
-        //
+        $transaction_types =  TransactionType::all();
+        return new TransactionTypeCollection($transaction_types);
     }
 
     /**
