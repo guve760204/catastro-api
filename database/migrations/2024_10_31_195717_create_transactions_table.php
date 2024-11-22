@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('transaction_status_id')->nullable();
             $table->text('description')->nullable();
+            $table->string('location', 255)->nullable();
             $table->date('register_date')->nullable();
             $table->date('end_date')->nullable();
             $table->date('accepted_at')->nullable();

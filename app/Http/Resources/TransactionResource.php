@@ -19,6 +19,7 @@ class TransactionResource extends JsonResource
             'id'=>$this->id,
             'uuid'=>$this->uuid,
             'description'=>$this->description,
+            'location'=>$this->location,
             'name'=>$this->name,
             'address'=>$this->address,
             'phone'=>$this->phone,
