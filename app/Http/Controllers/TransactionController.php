@@ -9,6 +9,7 @@ use App\Http\Requests\StoreTransactionRequest;
 use App\Http\Requests\UpdateTransactionRequest;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,8 +26,15 @@ class TransactionController extends Controller
             'user_id'=>'nullable|integer',
         ]);
 
+        $user = Auth::user();
 
-        $transactions = Transaction::query()->with('notary', 'agent', 'costumer');
+        $transactions = Transaction::query()->with('notary', 'agent');
+        if($request->get('my_transactions')){
+            $transactions = $transactions->whereHas('agent', function ($transaction) use ($user) {
+                return $transaction->where('agent_id', $user->id);
+            });
+
+        }
 
         if($request->get('from') && $request->get('to')) {
             $from = Carbon::parse($request->get('from'));
@@ -50,26 +58,34 @@ class TransactionController extends Controller
         $request->validate([
             'transaction_type_id'=>'required|integer',
             'notary_id'=>'nullable|integer',
-            'agent_id'=>'required|integer',
+            'agent_id'=>'nullble|integer',
             'costumer_id'=>'nullable|integer',
             'description'=>'nullable|string',
+            'location'=>'required|string',
             'name'=>'required|string',
             'phone'=>'nullable|string',
             'address'=>'nullable|string',
             'email'=>'nullable|string',
         ]);
 
+        $user = auth()->user();
+
+        if(!$user->role_id == 4 || !$user->role_id == 5){
+            abort(403, 'Solo los peritos autorizados pueden dar de alta este trámite');
+        }
 
         $transaction = Transaction::create([
             'transaction_type_id' =>$request->transaction_type_id,
-            'notary_id' =>$request->notary_id,
-            'agent_id' =>$request->agent_id,
+            'agent_id' =>$user->id,
             'costumer_id' =>$request->costumer_id,
             'description' =>$request->description,
             'name'=>$request->name,
             'phone'=>$request->phone,
+            'location'=>$request->location,
             'address'=>$request->address,
             'email'=>$request->email,
+            'lat'=>$request->lat,
+            'lng'=>$request->lng,
         ]);
 
         $transaction->uuid = $this->randomString(6, $transaction->id);
