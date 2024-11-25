@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Str;
 
 class TransactionResource extends JsonResource
 {
@@ -19,6 +20,7 @@ class TransactionResource extends JsonResource
             'id'=>$this->id,
             'uuid'=>$this->uuid,
             'description'=>$this->description,
+            'excerpt'=>Str::words($this->description,12),
             'location'=>$this->location,
             'name'=>$this->name,
             'address'=>$this->address,
@@ -38,6 +40,7 @@ class TransactionResource extends JsonResource
             'notary'=>NotaryResource::make($this->whenLoaded('notary')),
             'agent'=>AgentResource::make($this->whenLoaded('agent')),
             'user'=>UserResource::make($this->whenLoaded('user')),
+            'attendant'=>UserResource::make($this->whenLoaded('attendant')),
             'rejections'=>TransactionRejectionResource::collection($this->whenLoaded('rejections')),
         ];
     }

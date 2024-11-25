@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     protected $fillable =['transaction_type_id', 'notary_id', 'agent_id',  'description', 'location', 'name', 'phone', 'email', 'address', 'lat', 'lng'];
-    protected $with = ['user', 'rejections', 'transaction_type', 'status'];
+    protected $with = ['user', 'attendant', 'rejections', 'transaction_type', 'status'];
     //relations
     public function rejections ()
     {
@@ -16,6 +16,9 @@ class Transaction extends Model
 
     public function user (){
         return $this->belongsTo(User::class);
+    }
+    public function attendant (){
+        return $this->belongsTo(User::class, 'attendant_id', 'id');
     }
 
     public function notary(){

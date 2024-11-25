@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('transaction_type_id')->nullable();
             $table->unsignedBigInteger('notary_id')->nullable();
             $table->unsignedBigInteger('agent_id')->nullable();
+            $table->unsignedBigInteger('attendant_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('transaction_status_id')->nullable();
             $table->text('description')->nullable();
