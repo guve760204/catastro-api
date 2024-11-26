@@ -63,10 +63,15 @@ class TransactionController extends Controller
             'description'=>'nullable|string',
             'location'=>'required|string',
             'name'=>'required|string',
+            'files'=>'required|array',
             'phone'=>'nullable|string',
             'address'=>'nullable|string',
             'email'=>'nullable|string',
         ]);
+
+        if($request->hasFile('files')) {
+            abort(403, 'No estan llegando los archivos');
+        }
 
         $user = auth()->user();
 
@@ -118,17 +123,19 @@ class TransactionController extends Controller
             'transaction_type_id'=>'required|integer',
             'description'=>'nullable|string',
             'name'=>'required|string',
-            'phone'=>'nullable|string',
+            'phone'=>'required|string',
             'address'=>'nullable|string',
             'email'=>'nullable|string',
+            'location'=>'nullable|string',
         ]);
 
         $transaction->transaction_type_id = $request->transaction_type_id;
         $transaction->description = $request->description;
         $transaction->name = $request->name;
         $transaction->phone = $request->phone;
-        $transaction->address = $request->addres;
-        $transaction->description = $request->description;
+        $transaction->email = $request->email;
+        $transaction->address = $request->address;
+        $transaction->location = $request->location;
 
 
         $transaction->save();

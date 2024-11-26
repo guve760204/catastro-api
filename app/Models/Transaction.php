@@ -6,8 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
-    protected $fillable =['transaction_type_id', 'notary_id', 'agent_id',  'description', 'location', 'name', 'phone', 'email', 'address', 'lat', 'lng'];
+    protected $fillable =['transaction_type_id',  'description', 'location', 'name', 'phone', 'email', 'address', 'lat', 'lng'];
     protected $with = ['user', 'attendant', 'rejections', 'transaction_type', 'status'];
+
     //relations
     public function rejections ()
     {
