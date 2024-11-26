@@ -40,4 +40,11 @@ class Transaction extends Model
     public function status(){
         return $this->belongsTo(TransactionStatus::class, 'transaction_status_id', 'id');
     }
+    //media collections
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('plano')
+            ->acceptsMimeTypes(['.dwg', '.DWG'])
+            ->singleFile();
+    }
 }
