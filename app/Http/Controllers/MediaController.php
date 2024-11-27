@@ -10,7 +10,7 @@ use Illuminate\Validation\Rules\File;
 
 class MediaController extends Controller
 {
-    public function uploadBluprint(Transaction $transaction, Request $request)
+    public function uploadBlueprint(Transaction $transaction, Request $request)
     {
         $request->validate([
            'file'=>['required', File::types(['dwg', 'DWG'])->max(5000000)]

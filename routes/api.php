@@ -37,7 +37,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::resource('transaction_types', TransactionTypeController::class);
 
     //Media Routes
-    Route::post('media/upload_blueprint', [MediaController::class, 'uploadBlueprint']);
+    Route::post('transaction/{transaction}/media/upload_blueprint', [MediaController::class, 'uploadBlueprint']);
 
 
     //...

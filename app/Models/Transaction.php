@@ -10,7 +10,7 @@ class Transaction extends Model implements HasMedia
 {
     use InteractsWithMedia;
     protected $fillable =['transaction_type_id',  'description', 'location', 'name', 'phone', 'email', 'address', 'lat', 'lng'];
-    protected $with = ['user', 'attendant', 'rejections', 'transaction_type', 'status'];
+    protected $with = ['user', 'attendant', 'rejections', 'transaction_type', 'status', 'media'];
 
     //relations
     public function rejections ()
@@ -47,7 +47,6 @@ class Transaction extends Model implements HasMedia
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('blueprint')
-            ->acceptsMimeTypes(['.dwg', '.DWG'])
             ->singleFile();
     }
 }
