@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MediaController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\UserController;
@@ -34,6 +35,10 @@ Route::middleware('auth:sanctum')->group(function(){
 
    //Transaction type resources
     Route::resource('transaction_types', TransactionTypeController::class);
+
+    //Media Routes
+    Route::post('media/upload_blueprint', [MediaController::class, 'uploadBlueprint']);
+
 
     //...
 });

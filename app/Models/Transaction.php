@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Transaction extends Model
+class Transaction extends Model implements HasMedia
 {
+    use InteractsWithMedia;
     protected $fillable =['transaction_type_id',  'description', 'location', 'name', 'phone', 'email', 'address', 'lat', 'lng'];
     protected $with = ['user', 'attendant', 'rejections', 'transaction_type', 'status'];
 
@@ -43,7 +46,7 @@ class Transaction extends Model
     //media collections
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('plano')
+        $this->addMediaCollection('blueprint')
             ->acceptsMimeTypes(['.dwg', '.DWG'])
             ->singleFile();
     }
