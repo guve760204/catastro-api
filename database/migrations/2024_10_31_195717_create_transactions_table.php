@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->nullable();
+            $table->softDeletes();
             $table->unsignedBigInteger('transaction_type_id')->nullable();
             $table->unsignedBigInteger('notary_id')->nullable();
             $table->unsignedBigInteger('agent_id')->nullable();

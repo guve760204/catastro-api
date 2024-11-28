@@ -30,7 +30,7 @@ class TransactionResource extends JsonResource
             'lng'=>$this->lng,
             'register_date'=>$this->register_date? Carbon::parse($this->register_date)->format('Y-m-d'): null,
             'end_date'=>$this->end_date? Carbon::parse($this->end_date)->format('Y-m-d'): null,
-            'blue_print'=>$this->getFirstMedia('blueprint'),
+            'blueprint'=>$this->getFirstMedia('blueprint'),
             'accepted_at'=>$this->accepted_at,
             'processed_at'=>$this->processed_at,
             'rejected_at'=>$this->rejected_at,

@@ -63,7 +63,6 @@ class TransactionController extends Controller
             'description'=>'nullable|string',
             'location'=>'required|string',
             'name'=>'required|string',
-            'files'=>'required|array',
             'phone'=>'nullable|string',
             'address'=>'nullable|string',
             'email'=>'nullable|string',
@@ -73,7 +72,7 @@ class TransactionController extends Controller
             abort(403, 'No estan llegando los archivos');
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
 
         if(!$user->role_id == 4 || !$user->role_id == 5){
             abort(403, 'Solo los peritos autorizados pueden dar de alta este trámite');
@@ -93,9 +92,17 @@ class TransactionController extends Controller
             'lng'=>$request->lng,
         ]);
 
+        if($request->get('agent_id')){
+            $transaction->agent_id = $request->get('agent_id');
+        }else{
+            $transaction->agent_id = auth()->user()->id;
+        }
+
+
         $transaction->uuid = $this->randomString(6, $transaction->id);
         $transaction->register_date = now();
         $transaction->user_id = auth()->user()->id;
+
         $transaction->transaction_status_id= 1;
         $transaction->save();
         return new TransactionResource($transaction);
@@ -148,7 +155,9 @@ class TransactionController extends Controller
      */
     public function destroy(Transaction $transaction)
     {
+        $transaction->delete();
 
+        return response()->json(['ok'=>true, 'message' => 'El trámite se ha eliminado con éxito']);
     }
 
     public function randomString($length = 6, $transaction_id) {

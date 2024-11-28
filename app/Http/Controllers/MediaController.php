@@ -12,9 +12,13 @@ class MediaController extends Controller
 {
     public function uploadBlueprint(Transaction $transaction, Request $request)
     {
-        $request->validate([
+
+
+
+       $request->validate([
            'file'=>['required', File::types(['dwg', 'DWG'])->max(5000000)]
         ]);
+
 
         if(!$request->hasFile('file')){
             abort(403, 'No se esta recibiendo el archivo');
