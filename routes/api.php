@@ -3,6 +3,7 @@
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\NotaryController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\UserController;
@@ -29,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //Transaction Routes
     Route::resource('transactions', TransactionController::class);
+    Route::patch('transactions/{transaction}/set_attendant', [TransactionController::class, 'setAttendant']);
 
     //Users routes
    Route::resource('users', UserController::class);
@@ -38,6 +40,12 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //Media Routes
     Route::post('transactions/{transaction}/media/upload_blueprint', [MediaController::class, 'uploadBlueprint']);
+
+    //Agents Routes
+    Route::resource('agents', AgentController::class);
+
+    //Notary Routes
+    Route::Resource('notaries', NotaryController::class);
 
 
     //...

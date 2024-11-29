@@ -179,4 +179,13 @@ class TransactionController extends Controller
 
         return now()->year.'-ID'.$transaction_id.'-'.$randomString.'-'.$randomNumber;
     }
+
+    public function setAttendant(Transaction $transaction){
+        $user = Auth::user();
+
+        $transaction->attendant_id = $user->id;
+        $transaction->save();
+
+        return response()->json(['ok'=>true, 'message'=>'Se ha asignado con éxito al supervisor del trámite']);
+    }
 }

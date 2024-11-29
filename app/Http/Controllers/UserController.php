@@ -34,7 +34,9 @@ class UserController extends Controller
             'phone' => 'required',
             'address' => 'required',
             'cargo' => 'required',
-            'role_id' => 'required'
+            'role_id' => 'required',
+            'agent_id' => 'nullable | numeric',
+            'notary_id' => 'nullable | notary_id'
         ]);
 
 
@@ -55,6 +57,13 @@ class UserController extends Controller
             'cargo' => $request->get('cargo'),
             'role_id' => $request->role_id
         ]);
+
+        if($request->get('agent_id')){
+            $user->notary_id = $request->get('agent_id');
+        }
+        if($request->get('notary_id')){
+            $user->notary_id = $request->get('notary_id');
+        }
 
         $user->is_active = true;
         $user->save();

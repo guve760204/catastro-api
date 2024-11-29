@@ -21,6 +21,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedInteger('role_id')->default(7);
+            $table->unsignedInteger('agent_id')->nullable();
+            $table->unsignedInteger('notary_id')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

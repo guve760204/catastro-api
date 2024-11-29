@@ -16,13 +16,17 @@ class UserResource extends JsonResource
     {
         return [
             'id'=>$this->id,
+            'notary_id'=>$this->notary_id,
+            'agent_id'=>$this->agent_id,
             'name'=>$this->name,
             'cargo'=>$this->cargo,
             'phone'=>$this->phone,
             'email'=>$this->email,
             'address'=>$this->address,
             'is_active'=>$this->is_active? true : false,
-            'role_id'=>$this->role_id
+            'role_id'=>$this->role_id,
+            'agent'=>AgentResource::make($this->whenLoaded('agent')),
+            'notary'=>NotaryResource::make($this->whenLoaded('notary')),
         ];
     }
 }

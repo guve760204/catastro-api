@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\NotaryCollection;
 use App\Models\Notary;
 use App\Http\Requests\StoreNotaryRequest;
 use App\Http\Requests\UpdateNotaryRequest;
@@ -13,7 +14,8 @@ class NotaryController extends Controller
      */
     public function index()
     {
-        //
+        $notaries = Notary::all();
+        return new NotaryCollection($notaries);
     }
 
     /**
