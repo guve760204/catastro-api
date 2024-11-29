@@ -59,4 +59,13 @@ class User extends Authenticatable implements HasMedia
     public function refresh_tokens(){
         return $this->hasMany(RefreshToken::class);
     }
+
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class);
+    }
+    public function notary()
+    {
+        return $this->belongsTo(Notary::class);
+    }
 }

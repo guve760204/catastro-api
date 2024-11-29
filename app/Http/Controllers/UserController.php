@@ -18,7 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::query();
+        $users = User::query()->with('agent', 'notary');
         $users = $users->get();
         return new UserCollection($users);
     }
@@ -36,7 +36,7 @@ class UserController extends Controller
             'cargo' => 'required',
             'role_id' => 'required',
             'agent_id' => 'nullable | numeric',
-            'notary_id' => 'nullable | notary_id'
+            'notary_id' => 'nullable | numeric'
         ]);
 
 
@@ -55,7 +55,9 @@ class UserController extends Controller
             'phone' => $request->get('phone'),
             'address' => $request->get('address'),
             'cargo' => $request->get('cargo'),
-            'role_id' => $request->role_id
+            'role_id' => $request->role_id,
+            'agent_id' => 'nullable | numeric',
+            'notary_id' => 'nullable | numeric'
         ]);
 
         if($request->get('agent_id')){
