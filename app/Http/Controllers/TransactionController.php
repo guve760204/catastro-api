@@ -31,7 +31,7 @@ class TransactionController extends Controller
         $transactions = Transaction::query()->with('notary', 'agent');
         if($request->get('my_transactions')){
             $transactions = $transactions->whereHas('agent', function ($transaction) use ($user) {
-                return $transaction->where('agent_id', $user->id);
+                return $transaction->where('agent_id', $user->agent_id);
             });
 
         }
@@ -58,7 +58,7 @@ class TransactionController extends Controller
         $request->validate([
             'transaction_type_id'=>'required|integer',
             'notary_id'=>'nullable|integer',
-            'agent_id'=>'nullble|integer',
+            'agent_id'=>'nullable|integer',
             'costumer_id'=>'nullable|integer',
             'description'=>'nullable|string',
             'location'=>'required|string',
@@ -68,9 +68,6 @@ class TransactionController extends Controller
             'email'=>'nullable|string',
         ]);
 
-        if($request->hasFile('files')) {
-            abort(403, 'No estan llegando los archivos');
-        }
 
         $user = Auth::user();
 
@@ -80,7 +77,6 @@ class TransactionController extends Controller
 
         $transaction = Transaction::create([
             'transaction_type_id' =>$request->transaction_type_id,
-            'agent_id' =>$user->id,
             'costumer_id' =>$request->costumer_id,
             'description' =>$request->description,
             'name'=>$request->name,
@@ -92,19 +88,13 @@ class TransactionController extends Controller
             'lng'=>$request->lng,
         ]);
 
-        if($request->get('agent_id')){
-            $transaction->agent_id = $request->get('agent_id');
-        }else{
-            $transaction->agent_id = auth()->user()->id;
-        }
-
-
         $transaction->uuid = $this->randomString(6, $transaction->id);
+        $transaction->agent_id = $user->agent_id? $user->agent_id : null;
         $transaction->register_date = now();
-        $transaction->user_id = auth()->user()->id;
-
+        $transaction->user_id = $user->id;
         $transaction->transaction_status_id= 1;
         $transaction->save();
+
         return new TransactionResource($transaction);
     }
 
@@ -184,8 +174,28 @@ class TransactionController extends Controller
         $user = Auth::user();
 
         $transaction->attendant_id = $user->id;
+        $transaction->transaction_status_id = 3;
         $transaction->save();
 
         return response()->json(['ok'=>true, 'message'=>'Se ha asignado con éxito al supervisor del trámite']);
     }
+
+    public function acceptTransaction(Transaction $transaction)
+    {
+        $transaction->transaction_status_id = 5;
+        $transaction->processed_at = now();
+        $transaction->save();
+
+        return response()->json(['ok'=>true, 'message'=>'Se ha aprobado el trámite']);
+    }
+
+    public function rejectTransaction(Transaction $transaction)
+    {
+        $transaction->transaction_status_id = 4;
+        $transaction->rejected_at = now();
+        $transaction->save();
+
+        return response()->json(['ok'=>true, 'message'=>'Se ha rechazado el trámite']);
+    }
+
 }

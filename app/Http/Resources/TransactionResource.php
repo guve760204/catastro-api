@@ -18,6 +18,8 @@ class TransactionResource extends JsonResource
     {
         return [
             'id'=>$this->id,
+            'user_id'=>$this->user_id,
+            'attendant_id' => $this->attendant?  $this->attendant->id : null,
             'uuid'=>$this->uuid,
             'description'=>$this->description,
             'excerpt'=>Str::words($this->description,12),

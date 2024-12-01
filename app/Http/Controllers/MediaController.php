@@ -26,6 +26,9 @@ class MediaController extends Controller
 
         $transaction->addMedia($request->file('file'))->toMediaCollection('blueprint');
 
+        $transaction->transaction_status_id = 2;
+        $transaction->save();
+
         return response()->json(['ok'=>true, 'message'=>'Archivo Cargado con éxito.']);
     }
 }

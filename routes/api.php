@@ -31,6 +31,8 @@ Route::middleware('auth:sanctum')->group(function(){
     //Transaction Routes
     Route::resource('transactions', TransactionController::class);
     Route::patch('transactions/{transaction}/set_attendant', [TransactionController::class, 'setAttendant']);
+    Route::patch('transactions/{transaction}/accept_transaction', [TransactionController::class, 'acceptTransaction']);
+    Route::patch('transactions/{transaction}/reject_transaction', [TransactionController::class, 'rejectTransaction']);
 
     //Users routes
    Route::resource('users', UserController::class);

@@ -13,11 +13,11 @@ class TransactionStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        TransactionStatus::create(['name'=>'Inicio-registrado en la plataforma', 'color'=>'#BAE8C2']);
+        TransactionStatus::create(['name'=>'Iniciado-Sin plano en la plataforma', 'color'=>'#f1df7a']);
         TransactionStatus::create(['name'=>'Recibido en la plataforma', 'color'=>'#EBC809']);
-        TransactionStatus::create(['name'=>'En trámite', 'color'=>'#EBC809']);
+        TransactionStatus::create(['name'=>'En revisión', 'color'=>'#EBC809']);
         TransactionStatus::create(['name'=>'Rechazdo', 'color'=>'#EB342F']);
-        TransactionStatus::create(['name'=>'Listo para entrega', 'color'=>'#5BEB79']);
+        TransactionStatus::create(['name'=>'Aceptado-Listo para entrega', 'color'=>'#5BEB79']);
         TransactionStatus::create(['name'=>'Entregado', 'color'=>'#07EB1D']);
     }
 }
