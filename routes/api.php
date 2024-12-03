@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\NotaryController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\TransactionRejectionTypeController;
 use App\Http\Controllers\TransactionTypeController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,8 @@ Route::middleware('auth:sanctum')->group(function(){
     //Notary Routes
     Route::Resource('notaries', NotaryController::class);
 
+    //Trnsaction rejection type routes
+    Route::Resource('transaction_rejection_types', TransactionRejectionTypeController::class);
 
     //...
 });

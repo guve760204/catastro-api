@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TransactionRejectionTypeCollection;
 use App\Models\Transaction_rejection_type;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTransaction_rejection_typeRequest;
@@ -14,7 +15,8 @@ class TransactionRejectionTypeController extends Controller
      */
     public function index()
     {
-        //
+        $rejections = Transaction_rejection_type::all();
+        return new TransactionRejectionTypeCollection($rejections);
     }
 
     /**
