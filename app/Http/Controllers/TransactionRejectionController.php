@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\Transaction_rejection;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTransaction_rejectionRequest;
-use App\Http\Requests\UpdateTransaction_rejectionRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class TransactionRejectionController extends Controller
 {
@@ -20,9 +22,27 @@ class TransactionRejectionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTransaction_rejectionRequest $request)
+    public function store(Request $request, Transaction $transaction)
     {
-        //
+        $request->validate([
+           'rejections' => 'required | array',
+            'rejections.*.transaction_rejection_type_id' => 'required',
+            'rejections.*.description' => 'nullable | string',
+        ]);
+
+        $rejections = $request->get('rejections');
+        $user_id = Auth::user()->id;
+
+        foreach ($rejections as $rejection) {
+            Transaction_rejection::create(['transaction_rejection_type_id'=>$rejection['transaction_rejection_type_id'], 'desctiption'=>$rejection['description'], 'user_id'=>$user_id, 'transaction_id'=>$transaction->id]);
+        }
+
+        $transaction->rejected_at = now();
+        $transaction->transaction_status_id = 4;
+        $transaction->accepted_at = null;
+        $transaction->save();
+
+        return response()->json(['ok'=>true, 'msg'=>'Rechazos agregados correctamente']);
     }
 
     /**

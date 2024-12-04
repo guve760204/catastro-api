@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction_rejection extends Model
 {
     protected $with = ['transaction_rejection_type'];
+
+    protected $fillable = ['description', 'transaction_rejection_type_id', 'user_id', 'transaction_id'];
     //relations
     public function transaction_rejection_type()
     {

@@ -33,7 +33,6 @@ class TransactionController extends Controller
             $transactions = $transactions->whereHas('agent', function ($transaction) use ($user) {
                 return $transaction->where('agent_id', $user->agent_id);
             });
-
         }
 
         if($request->get('from') && $request->get('to')) {
@@ -183,6 +182,8 @@ class TransactionController extends Controller
     public function acceptTransaction(Transaction $transaction)
     {
         $transaction->transaction_status_id = 5;
+        $transaction->accepted_at = now();
+        $transaction->rejected_at = null;
         $transaction->processed_at = now();
         $transaction->save();
 
