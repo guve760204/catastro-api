@@ -14,6 +14,11 @@ class TransactionCollection extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return ['data' => $this->collection];
+        return [
+            'data' => $this->collection,
+            'transactions_count'=>$this->collection->count(),
+            'accepted_transactions_count'=>$this->collection->where('accepted_at', !null)->count(),
+            'rejected_transactions_count'=>$this->collection->where('rejected_at', !null)->count(),
+        ];
     }
 }

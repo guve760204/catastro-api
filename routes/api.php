@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmailNotificationController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\NotaryController;
 use App\Http\Controllers\TransactionController;
@@ -35,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::patch('transactions/{transaction}/set_attendant', [TransactionController::class, 'setAttendant']);
     Route::patch('transactions/{transaction}/accept_transaction', [TransactionController::class, 'acceptTransaction']);
     Route::patch('transactions/{transaction}/reject_transaction', [TransactionController::class, 'rejectTransaction']);
+    Route::patch('transactions/{transaction}/deliver_transaction', [TransactionController::class, 'deliverTransaction']);
 
     //Users routes
    Route::resource('users', UserController::class);
@@ -54,8 +56,11 @@ Route::middleware('auth:sanctum')->group(function(){
     //Rejection Routes
     Route::post('transactions/{transaction}/rejections', [TransactionRejectionController::class, 'store']);
 
-    //Trnsaction rejection type routes
+    //Transaction rejection type routes
     Route::Resource('transaction_rejection_types', TransactionRejectionTypeController::class);
 
+    //email notifications
+    Route::post('email_notifications/notify_all_agents', [EmailNotificationController::class, 'notifyAllAgents']);
+    Route::post('user/{user}/email_notifications/notify_user', [EmailNotificationController::class, 'notifyUser']);
     //...
 });

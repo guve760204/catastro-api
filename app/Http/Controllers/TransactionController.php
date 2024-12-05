@@ -198,5 +198,13 @@ class TransactionController extends Controller
 
         return response()->json(['ok'=>true, 'message'=>'Se ha rechazado el trámite']);
     }
+    public function deliverTransaction(Transaction $transaction)
+    {
+        $transaction->transaction_status_id = 6;
+        $transaction->end_date = now();
+        $transaction->save();
+
+        return response()->json(['ok'=>true, 'message'=>'Se ha marcado el trámite como entregado y finalizado']);
+    }
 
 }
