@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\thisYearScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
@@ -12,6 +13,12 @@ class Transaction extends Model implements HasMedia
     use InteractsWithMedia, SoftDeletes;
     protected $fillable =['transaction_type_id',  'description', 'location', 'name', 'phone', 'email', 'address', 'lat', 'lng'];
     protected $with = ['user', 'attendant', 'rejections', 'transaction_type', 'status', 'media'];
+
+    //Global scope
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new thisYearScope());
+    }
 
     //relations
     public function rejections ()
