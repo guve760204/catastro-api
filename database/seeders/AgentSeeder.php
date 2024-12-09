@@ -17,7 +17,7 @@ class AgentSeeder extends Seeder
         Agent::create(['name' => 'ING SAUL JUÁREZ BARRIENTOS', 'address' => 'CALZADA DE SAN MIGUEL #104, CENTRO, SAN FELIPE GTO.', 'phone' => '4286851626', 'email' => 'hechospara_medir@hotmail.com', 'is_local'=>1]);
         Agent::create(['name' => 'ING LUIS SOTO CUELLAR', 'address' => 'COLÓN 810, CENTRO, SAN FELIPE GTO.', 'phone' => '4286852300', 'email' => 'cusoma54@hotmail.com', 'is_local'=>1]);
         Agent::create(['name' => 'ING. JOSÉ FELIX CÁRDENAS YEPEZ', 'address' => 'PINO SUÁREZ #226-A, CENTRO, SAN FELIPE', 'phone' => '4286851500', 'email' => 'cardeye_@hotmail.com', 'is_local'=>1]);
-        Agent::create(['name' => 'ING JAVIER JÚAREZ BARRIENTOS', 'address' => 'CALZADA DE SAN MIGUEL #104, CENTRO, SAN FELIPE GTO.', 'phone' => '4286851626', 'email' => 'hechospara_medir2@hotmail.com', 'is_local'=>1]);
+        Agent::create(['name' => 'ING JAVIER JÚAREZ BARRIENTOS', 'address' => 'CALZADA DE SAN MIGUEL #104, CENTRO, SAN FELIPE GTO.', 'phone' => '4286851626', 'email' => 'hechosparamedir2@hotmail.com', 'is_local'=>1]);
         Agent::create(['name' => 'ING. ERICK DAVID CENTENO HERNÁNDEZ', 'address' => '16 DE SEPTIEMBRE # 410, CENTRO, SAN FELIPE GTO.', 'phone' => '4286851316', 'email' => 'despacho.centeno@hotmail.com', 'is_local'=>1]);
         Agent::create(['name' => 'ING. SALVADOR TORRES CAMARILLO', 'address' => 'PROFESORES #318, CENTRO, SAN FELIPE GTO.', 'phone' => '4286850365', 'email' => 'storrescama@hotmail.com', 'is_local'=>1]);
         Agent::create(['name' => 'ING. DIANA BERENICE SOTO MANZANO', 'address' => 'COLON #810, CENTRO, SAN FELIPE GTO.', 'phone' => '4286852300', 'email' => 'dsoto.m@hotmail.com', 'is_local'=>1]);
