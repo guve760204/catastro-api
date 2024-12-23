@@ -32,18 +32,26 @@ class EmailNotificationController extends Controller
         return response()->json(['ok'=>true, 'message' => 'Email enviado con éxito' ]);
     }
 
-    public function notifyUser(User $user, Request $request)
+    public function notifyEmail(Request $request)
     {
         $request->validate([
+            'email' => 'required',
             'message' => 'required | string',
             'subject' => 'required | string',
         ]);
 
+        $email = $request->get('email');
+
+        if(!$email){
+            abort(403, 'El destinatario no tiene un email registrado');
+        }
+
+
         $message = $request->get('message', 'Gracias por usar nuestra plataforma!');
         $subject = $request->get('subject', 'Mensaje automático del sistema');
 
-        Mail::raw('Bienvenido a la plataforma Catastro App, '.$message, function (Message $message) use ($user, $subject) {
-            $message->to($user->email)->from('catastro@catastro.com', 'Catastro')->subject($subject);
+        Mail::raw('Bienvenido a la plataforma Catastro App, '.$message, function (Message $message) use ($email, $subject) {
+            $message->to($email)->from('catastro@catastro.com', 'Catastro')->subject($subject);
         });
 
         return response()->json(['ok'=>true, 'message' => 'Email enviado con éxito' ]);

@@ -61,6 +61,6 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //email notifications
     Route::post('email_notifications/notify_all_agents', [EmailNotificationController::class, 'notifyAllAgents']);
-    Route::post('user/{user}/email_notifications/notify_user', [EmailNotificationController::class, 'notifyUser']);
+    Route::post('email_notifications/notify_email', [EmailNotificationController::class, 'notifyEmail']);
     //...
 });
